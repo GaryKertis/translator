@@ -1,13 +1,32 @@
 #include "splitter.h"
 #include <iostream>
 #include <unistd.h>
+#include <fstream>
 
 void readOption(std::string input) {
     for(auto const& value: splitter(input, ".")) 
 	{
-		std::cout << value << std::endl;
+		//std::cout << value << std::endl;
 	}
 }
+
+int readFile(std::string fileName) {
+  std::string line;
+  std::ifstream myfile (fileName);
+  if (myfile.is_open())
+  {
+    while ( getline (myfile,line) )
+    {
+      readOption(line);
+    }
+    myfile.close();
+  }
+
+  else std::cerr << "Unable to open file " + fileName << std::endl; 
+
+  exit(EXIT_FAILURE);
+}
+
 
 int main(int argc, char* argv[])
 {
@@ -17,10 +36,10 @@ int main(int argc, char* argv[])
     while ((opt = getopt(argc, argv, "i:o:")) != -1) {
         switch (opt) {
         case 'i':
-        	readOption(optarg);
+        	readFile(optarg);
             break;
         case 'o':
-        	readOption(optarg);
+        	readFile(optarg);
             break;
         default: /* '?' */
             fprintf(stderr, "Usage: %s [-i] input [-o] output\n",
