@@ -1,46 +1,43 @@
+#include "splitter.h"
 #include <iostream>
-#include <unordered_map>
-#include <vector>
-#include <iterator> 
+#include <unistd.h>
+
+void readOption(std::string input) {
+    for(auto const& value: splitter(input, ".")) 
+	{
+		std::cout << value << std::endl;
+	}
+}
 
 int main(int argc, char* argv[])
 {
-	std::unordered_map<std::string, std::string> alphabet;
-	alphabet = {\
-		{"α","a"},\
-		{"β","b"},\
-		{"γ","y"},\
-		{"δ","s"},\
-		{"ε","e"},\
-		{"ς","c"},\
-		{"ζ","z"},\
-		{"η","n"},\
-		{"θ","o"},\
-		{"ι","i"},\
-		{"κ","k"},\
-		{"λ","μ"},\
-		{"ν","v"},\
-		{"ξ","e"},\
-		{"ό","o"},\
-		{"π","n"},\
-		{"σ","o"},\
-		{"ς","c"},\
-		{"τ","t"},\
-		{"υ","v"},\
-		{"φ","f"},\
-		{"χ","x"},\
-		{"ψ","y"},\
-		{"ω","w"}\
-	};
 
-	std::string str(argv[1]);
+	int opt;
 
-	for (unsigned i=0; i<str.length(); ++i)
-  {
-    std::cout << str.at(i);
-  }
-	// std::cout << str << std::endl;
+    while ((opt = getopt(argc, argv, "i:o:")) != -1) {
+        switch (opt) {
+        case 'i':
+        	readOption(optarg);
+            break;
+        case 'o':
+        	readOption(optarg);
+            break;
+        default: /* '?' */
+            fprintf(stderr, "Usage: %s [-i] input [-o] output\n",
+                    argv[0]);
+            exit(EXIT_FAILURE);
+        }
+    }
 
-	// std::cout << alphabet[argv[1]] << std::endl;
+   // if (optind >= argc) {
+   //      fprintf(stderr, "Expected argument after options\n");
+   //      exit(EXIT_FAILURE);
+   //  }
+
+   /* Other code omitted */
+
+   exit(EXIT_SUCCESS);
+
 } 
+
 
