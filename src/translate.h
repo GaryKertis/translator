@@ -1,10 +1,13 @@
+#ifndef TRANSLATE_H
+#define TRANSLATE_H
+
 #include <iostream>
 #include <unordered_map>
 #include <string>
 #include <bitset>
 
-int main(int argc, char* argv[]) {
-
+std::string translate(std::string line) {
+std::string result;
 std::unordered_map <std::string, std::string> alphabet;
 alphabet = {\
 	{"Ͱ","t"},{"ͱ","t"},{"Ͳ","t"},{"ͳ","t"},{"Ͷ","u"},{"ͷ","u"},{"ͻ","c"},{"ͼ","c"},{"ͽ","c"},{"Ϳ","j"},{"Ͼ","c"},{"Ͽ","d"},{"Ά","a"},{"Έ","e"},{"Ή","h"},{"Ί","i"},\
@@ -31,11 +34,12 @@ alphabet = {\
 	{"ῳ","w"},{"ῴ","w"},{"ῶ","w"},{"ῷ","w"},{"Ὸ","o"},{"Ό","i"},{"Ὼ","u"},{"Ώ","u"},{"ῼ","u"}};
 
 
-for(int i = 0; argv[1][i] != '\0';) {
+for(int i = 0; line[i] != '\0';) {
 
-	std::string input(1, argv[1][i]);
-	std::string input2(1,argv[1][i+1]);
-	std::string input3(1, argv[1][i+2]);
+	std::string input(1, line[i]);
+	std::string input2(1,line[i+1]);
+	std::string input3(1, line[i+2]);
+	std::string thisChar;
 
 	std::bitset<8> bites(input.c_str()[0]);
 
@@ -51,15 +55,16 @@ for(int i = 0; argv[1][i] != '\0';) {
 	std::unordered_map<std::string,std::string>::const_iterator got = alphabet.find (input);
 
 	if (got == alphabet.end()) {
-			std::cout << argv[1][i];
+			thisChar = line[i];
+			result.append(thisChar);
 			i = i + 1;
 		} else {
-			std::cout << alphabet[input];
+			result.append(alphabet[input]);
 		}
 }
 
-std::cout << std::endl;
+return result;
 
 }
 
-
+#endif

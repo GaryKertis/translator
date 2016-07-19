@@ -14,7 +14,6 @@ public:
 void Dictionary::add(std::vector<Definition> definitions) {
 	current_id++;
 	items.insert( items.end(), definitions.begin(), definitions.end() );
-	std::cout << current_id << std::endl;
 }
 
 #endif

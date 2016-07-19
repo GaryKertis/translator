@@ -1,29 +1,37 @@
 #include "splitter.h"
 #include "dictionary.h"
+#include "translate.h"
 #include <iostream>
 #include <unistd.h>
 #include <fstream>
 
-Dictionary dictionary;
+Dictionary sourceText;
+Dictionary inputText;
 
-int readFile(std::string fileName) {
+int readFile(std::string fileName, void (*callback)(std::string)) {
   std::string line;
   std::ifstream myfile (fileName);
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
     {
-      dictionary.add(splitter(line, "."));
+      (*callback)(line);
     }
     myfile.close();
   } else {
     std::cerr << "Unable to open file " + fileName << std::endl; 
     exit(EXIT_FAILURE);
   } 
-
-  std::cout << dictionary.items[124335].fullSentence << std::endl;
 }
 
+void translateLine(std::string line) {
+  std::string translatedLine = translate(line);
+  inputText.add(splitter(translatedLine, "."));
+}
+
+void addLine(std::string line) {
+  sourceText.add(splitter(line, "."));
+}
 
 int main(int argc, char* argv[])
 {
@@ -33,10 +41,10 @@ int main(int argc, char* argv[])
     while ((opt = getopt(argc, argv, "i:o:")) != -1) {
         switch (opt) {
         case 'i':
-        	readFile(optarg);
+        	readFile(optarg, translateLine);
             break;
         case 'o':
-        	readFile(optarg);
+        	readFile(optarg, addLine);
             break;
         default: /* '?' */
             fprintf(stderr, "Usage: %s [-i] input [-o] output\n",
