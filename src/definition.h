@@ -1,19 +1,19 @@
 #ifndef DEFINITION_H
 #define DEFINITION_H
 #include <iostream>
+#include "trim.h"
 
 class Definition {
 public:
 	std::string fullSentence;
 	std::string signature;
 	std::string hash;
-	void create(std::string);
+	Definition(std::string);
 };
 
-
-void Definition::create(std::string sentence) {
+Definition::Definition(std::string sentence) {
+	trim(sentence);
 	fullSentence = sentence;
-	std::cout << sentence;
 }
 
 #endif

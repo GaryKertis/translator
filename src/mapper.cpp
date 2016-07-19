@@ -1,14 +1,10 @@
 #include "splitter.h"
+#include "dictionary.h"
 #include <iostream>
 #include <unistd.h>
 #include <fstream>
 
-void readOption(std::string input) {
-    for(auto const& value: splitter(input, ".")) 
-	{
-		//std::cout << value << std::endl;
-	}
-}
+Dictionary dictionary;
 
 int readFile(std::string fileName) {
   std::string line;
@@ -17,14 +13,15 @@ int readFile(std::string fileName) {
   {
     while ( getline (myfile,line) )
     {
-      readOption(line);
+      dictionary.add(splitter(line, "."));
     }
     myfile.close();
-  }
+  } else {
+    std::cerr << "Unable to open file " + fileName << std::endl; 
+    exit(EXIT_FAILURE);
+  } 
 
-  else std::cerr << "Unable to open file " + fileName << std::endl; 
-
-  exit(EXIT_FAILURE);
+  std::cout << dictionary.items[124335].fullSentence << std::endl;
 }
 
 
@@ -58,5 +55,4 @@ int main(int argc, char* argv[])
    exit(EXIT_SUCCESS);
 
 } 
-
 
