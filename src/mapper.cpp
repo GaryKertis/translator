@@ -38,20 +38,24 @@ int main(int argc, char* argv[])
 
 	int opt;
 
-    while ((opt = getopt(argc, argv, "i:o:")) != -1) {
+    while ((opt = getopt(argc, argv, "i:s:")) != -1) {
         switch (opt) {
         case 'i':
         	readFile(optarg, translateLine);
             break;
-        case 'o':
+        case 's':
         	readFile(optarg, addLine);
             break;
         default: /* '?' */
-            fprintf(stderr, "Usage: %s [-i] input [-o] output\n",
+            fprintf(stderr, "Usage: %s [-i] input [-s] output\n",
                     argv[0]);
             exit(EXIT_FAILURE);
         }
     }
+
+
+  std::cout << inputText.items[10].chunks.items[6][3] << std::endl;
+  std::cout << sourceText.items[10].fullSentence << std::endl;
 
    // if (optind >= argc) {
    //      fprintf(stderr, "Expected argument after options\n");

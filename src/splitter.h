@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 
-// This is the content of the .h file, which is where the declarations go
+//This function splits a line of text and turns it into an array of definitions.
 std::vector<Definition> splitter(std::string input, std::string delimiter)
 {
 	std::vector<Definition> result;
@@ -18,7 +18,6 @@ std::vector<Definition> splitter(std::string input, std::string delimiter)
 	    result.push_back(definition);
 	    input.erase(0, pos + delimiter.length());
 	}
-	trim(input);
 	if(input.length() > 0) {
 		Definition definition(input);
 		result.push_back(definition);
