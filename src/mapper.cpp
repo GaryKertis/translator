@@ -54,8 +54,8 @@ int main(int argc, char* argv[])
     }
 
 
-  std::cout << inputText.items[10].chunks.items[6][3] << std::endl;
-  std::cout << sourceText.items[10].fullSentence << std::endl;
+  std::cout << inputText.items[10].fullSentence << std::endl;
+  inputText.items[10].chunks.list();
 
    // if (optind >= argc) {
    //      fprintf(stderr, "Expected argument after options\n");
