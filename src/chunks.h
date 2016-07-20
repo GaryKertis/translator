@@ -5,10 +5,15 @@
 #include <vector>
 
 class Chunks {
+
 public:
-	std::unordered_map<int, std::vector<std::string>> items;
+	typedef std::vector<std::string> chunkList;
+	typedef std::unordered_map<int, chunkList> chunkSizeList;
+
+	chunkSizeList items;
 	void add(std::string chunk);
-	void list();
+	chunkList list(int len);
+	void listAll();
 private:
 	void addSmallChunk(std::string smallChunk);
 
@@ -16,11 +21,11 @@ private:
 
 void Chunks::addSmallChunk(std::string smallChunk) {
 	int len = smallChunk.length();
-	std::unordered_map<int,std::vector<std::string>>::iterator got = items.find(len);
+	chunkSizeList::iterator got = items.find(len);
 	if (got == items.end()) {
-			std::vector<std::string> chunks;
+			chunkList chunks;
 			chunks.push_back(smallChunk);
-			std::pair<int, std::vector<std::string>> current_chunk(len, chunks);
+			std::pair<int, chunkList> current_chunk(len, chunks);
 			items.insert(current_chunk);
 		} else {
 			got->second.push_back(smallChunk);
@@ -30,7 +35,9 @@ void Chunks::addSmallChunk(std::string smallChunk) {
 void Chunks::add(std::string chunk) {
 	for(int i = 0; chunk[i] != '\0';) {
 
-		for(int j = 1; j <= chunk.length();) {
+		int remaining = chunk.length() - i;
+
+		for(int j = 1; j <= remaining;) {
 			std::string smallChunk = chunk.substr(i,j);
 			addSmallChunk(smallChunk);
 			j++;
@@ -40,7 +47,11 @@ void Chunks::add(std::string chunk) {
 	}
 }
 
-void Chunks::list() {
+Chunks::chunkList Chunks::list(int len) {
+	return items[len];
+}
+
+void Chunks::listAll() {
 
 	for(auto &i : items) {
 			std::cout << i.first << std::endl;

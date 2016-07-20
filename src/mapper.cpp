@@ -54,8 +54,17 @@ int main(int argc, char* argv[])
     }
 
 
-  std::cout << inputText.items[10].fullSentence << std::endl;
-  inputText.items[10].chunks.list();
+  for (int i = 1; i <= inputText.items[0].chunks.items.size();) {
+    std::vector<std::string> chunksToMatch = inputText.items[0].chunks.list(i);
+    for(auto const& chunk: chunksToMatch) {
+        //std::cout << "Currently Matching chunk: " << chunk << std::endl;
+      }
+    i++;
+  }
+
+
+  //std::cout << inputText.items[10].fullSentence << std::endl;
+  inputText.items[10].chunks.listAll();
 
    // if (optind >= argc) {
    //      fprintf(stderr, "Expected argument after options\n");
