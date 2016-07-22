@@ -1,6 +1,8 @@
 #include "splitter.h"
 #include "dictionary.h"
 #include "translate.h"
+#include "matches.h"
+#include "matcher.h"
 #include <iostream>
 #include <unistd.h>
 #include <fstream>
@@ -53,18 +55,13 @@ int main(int argc, char* argv[])
         }
     }
 
+  Matches matches(sourceText);
+  Matcher matcher;
 
-  for (int i = 1; i <= inputText.items[0].chunks.items.size();) {
-    std::vector<std::string> chunksToMatch = inputText.items[0].chunks.list(i);
-    for(auto const& chunk: chunksToMatch) {
-        //std::cout << "Currently Matching chunk: " << chunk << std::endl;
-      }
-    i++;
-  }
-
+  matcher.match(inputText.items[0], inputText.items[0]);
 
   //std::cout << inputText.items[10].fullSentence << std::endl;
-  inputText.items[10].chunks.listAll();
+  //inputText.items[10].chunks.listAll();
 
    // if (optind >= argc) {
    //      fprintf(stderr, "Expected argument after options\n");

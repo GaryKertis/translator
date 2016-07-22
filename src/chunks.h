@@ -1,14 +1,15 @@
 #ifndef CHUNKS_H
 #define CHUNKS_H
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 class Chunks {
 
 public:
 	typedef std::vector<std::string> chunkList;
-	typedef std::unordered_map<int, chunkList> chunkSizeList;
+	typedef std::map<int, chunkList> chunkSizeList;
+	typedef chunkSizeList::iterator chunkIterator;
 
 	chunkSizeList items;
 	void add(std::string chunk);
