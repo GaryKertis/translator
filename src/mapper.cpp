@@ -56,10 +56,10 @@ int main(int argc, char* argv[])
         }
     }
 
-  Matches matches(sourceText);
+  //Matches matches(sourceText);
   Matcher matcher;
 
-  matcher.match(inputText.items[0], inputText.items[0]);
+  matcher.match(inputText.items[0], sourceText.items[0]);
 
   //std::cout << inputText.items[10].fullSentence << std::endl;
   //inputText.items[10].chunks.listAll();

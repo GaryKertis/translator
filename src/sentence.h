@@ -1,7 +1,7 @@
 #ifndef SENTENCE_H
 #define SENTENCE_H
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include "trim.h"
 #include "chunkSize.h"
@@ -12,6 +12,7 @@ public:
 	std::string getFullSentence();
 	std::string getSignature();
 	ChunkSize getChunkSizes();
+	std::map<int, int> matches;
 
 	Sentence(std::string sentence);
 
@@ -27,7 +28,8 @@ Sentence::Sentence(std::string sentence) {
 	trim(sentence);
 	signature = sign(sentence);
 	fullSentence = sentence;
-
+	std::pair<int,int> example(0,0);
+	matches.insert(example);
 	chunkSizes.add(signature);
 }
 
