@@ -1,7 +1,6 @@
 #ifndef MATCHES_H
 #define MATCHES_H
 #include "dictionary.h"
-#include "sentence.h"
 #include <iostream>
 #include <vector>
 #include <iterator>

@@ -17,12 +17,15 @@ void Matcher::nameChunk(std::string chunk) {
 }
 
 void Matcher::processChunk(Sentence input, void (*callback)(std::string)) {
-	for (auto it = input.chunks.items.begin(); it != input.chunks.items.end(); ++it) {
-    Chunks::chunkList chunksToMatch = input.chunks.list(it->first);
-    for(auto const& chunk: chunksToMatch) {
-      (*callback)(chunk);
-    }
-  }
+
+	ChunkSize::chunkSizeList chunks = input.getChunkSizes().getAllChunks();
+
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
+	    Chunks::chunkList chunksToMatch = chunks[it->first].get();
+	    for(auto const& chunk: chunksToMatch) {
+	      (*callback)(chunk);
+	    }
+  	}
 }
 
 Sentence Matcher::match(Sentence input, Sentence source) {

@@ -3,6 +3,7 @@
 #include "translate.h"
 #include "matches.h"
 #include "matcher.h"
+#include "sentence.h"
 #include <iostream>
 #include <unistd.h>
 #include <fstream>
