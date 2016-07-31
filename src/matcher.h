@@ -57,9 +57,10 @@ void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
 	    	} 
 
 				if (totalChunksMatched > highestMatches) {
-					highestMatches = chunkMatch;
+					highestMatches = totalChunksMatched;
 					input.setBestMatch(source.getFullSentence());
-					std::cout << "New Best match" << source.getFullSentence() << std::endl;
+					std::cout << "HighestMatches " << highestMatches << std::endl;
+					std::cout << "New Best match " << source.getFullSentence() << std::endl;
 				}
 				//std::cout << "Found " << chunkMatch << " matches " << inputChunk << " for length " << chunkLength << std::endl;
 
