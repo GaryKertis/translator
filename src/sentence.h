@@ -5,21 +5,26 @@
 #include <vector>
 #include "trim.h"
 #include "chunkSize.h"
+#include "chunkCounter.h"
 
 class Sentence {
 public:
 
 	std::string getFullSentence();
 	std::string getSignature();
+	std::string getBestMatch();
+	void setBestMatch(std::string match);
 	ChunkSize getChunkSizes();
-	std::map<int, int> matches;
-
+	ChunkCounter getChunkCounter();
+	std::map<std::string, int> matches;
 	Sentence(std::string sentence);
 
 private:
+	std::string bestMatch;
 	std::string fullSentence;
 	std::string signature;
 	ChunkSize chunkSizes;
+	ChunkCounter chunkCounter;
 	std::string sign(std::string sentence);
 	static bool checkChars(char v);
 };
@@ -28,12 +33,17 @@ Sentence::Sentence(std::string sentence) {
 	trim(sentence);
 	signature = sign(sentence);
 	fullSentence = sentence;
-	std::pair<int,int> example(0,0);
-	matches.insert(example);
 	chunkSizes.add(signature);
+	chunkCounter.count(signature);
 }
 
+std::string Sentence::getBestMatch() {
+	return bestMatch;
+}
 
+void Sentence::setBestMatch(std::string match) {
+	bestMatch = match;
+}
 
 std::string Sentence::getFullSentence() {
 	return fullSentence;
@@ -41,6 +51,10 @@ std::string Sentence::getFullSentence() {
 
 std::string Sentence::getSignature() {
 	return signature;
+}
+
+ChunkCounter Sentence::getChunkCounter() {
+	return chunkCounter;
 }
 
 ChunkSize Sentence::getChunkSizes() {

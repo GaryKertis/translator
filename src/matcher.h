@@ -8,11 +8,12 @@
 
 class Matcher {
 public:
-	Sentence match(Sentence input, Sentence source);
+	void match(Sentence &input, Sentence source, int chunkLength);
 	void processChunk(Sentence input, void (*callback)(std::string));
 	static void nameChunk(std::string chunk);
 private:
 	int counter = 0;
+	int highestMatches = 0;
 };
 
 void Matcher::nameChunk(std::string chunk) {
@@ -31,41 +32,38 @@ void Matcher::processChunk(Sentence input, void (*callback)(std::string)) {
   	}
 }
 
-Sentence Matcher::match(Sentence input, Sentence source) {
-	//processChunk(input, nameChunk);
-	std::cout << "Currently matching " << input.getFullSentence() << " to " << source.getFullSentence() << std::endl;
+void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
+	std::cout << "Currently matching " << source.getFullSentence() << std::endl;
 	ChunkSize::chunkSizeList inputChunks = input.getChunkSizes().getAllChunks();
-	ChunkSize::chunkSizeList sourceChunks = source.getChunkSizes().getAllChunks();
 
-	for (auto it = inputChunks.begin(); it != inputChunks.end(); ++it) {
-	    Chunks::chunkList inputChunksToMatch = inputChunks[it->first].get();
+	    Chunks::chunkList inputChunksToMatch = inputChunks[chunkLength].get();
+	    int totalChunksMatched = 0;
 	    for(auto const& inputChunk: inputChunksToMatch) {
-	      
-		    Chunks::chunkList sourceChunksToMatch = sourceChunks[it->first].get();
-		    for(auto const& sourceChunk: sourceChunksToMatch) {
-      
-		    	if (inputChunk == sourceChunk) {
+	        
+	        int chunkMatch = source.getChunkCounter().getCount(inputChunk);  
 
-					std::map<int,int>::iterator got = input.matches.find(it->first);
+	    	if (chunkMatch > 0) {
 
-					if (got == input.matches.end()) {
+				std::map<std::string,int>::iterator got = input.matches.find(source.getFullSentence());
 
-						std::pair<int, int> current_chunk(it->first, 1);
-						input.matches.insert(current_chunk);
+				if (got == input.matches.end()) {
+					std::pair<std::string, int> current_chunk(source.getFullSentence(), 1);
+					input.matches.insert(current_chunk);
+				} else {
+					got->second = got->second + 1;
+				}
 
-					} else {
+				totalChunksMatched += chunkMatch;
+	    	} 
 
-						got->second = got->second + 1;
+				if (totalChunksMatched > highestMatches) {
+					highestMatches = chunkMatch;
+					input.setBestMatch(source.getFullSentence());
+					std::cout << "New Best match" << source.getFullSentence() << std::endl;
+				}
+				//std::cout << "Found " << chunkMatch << " matches " << inputChunk << " for length " << chunkLength << std::endl;
 
-					}
-
-					std::cout << "Found match " << inputChunk << " for length " << it-> first << std::endl;
-
-		    	}
-
-		    }
 	    }
-  	}
 
 }
 

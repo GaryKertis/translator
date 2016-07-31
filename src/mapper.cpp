@@ -57,10 +57,20 @@ int main(int argc, char* argv[])
     }
 
   //Matches matches(sourceText);
+
+  //populate initial sentence list.
+  for (auto it = sourceText.items.begin(); it != sourceText.items.end(); ++it) {
   Matcher matcher;
+  matcher.match(inputText.items[0], *it, 3);
+  // std::map<std::string,int>::iterator got = inputText.items[0].matches.find(it->getFullSentence());
+  
+  // if (got != inputText.items[0].matches.end()) {
+  //   std::cout << got->first << std::endl << got->second << std::endl;
+  // }
 
-  matcher.match(inputText.items[0], sourceText.items[0]);
-
+  }
+  std::cout << "English " << inputText.items[0].getFullSentence() << std::endl;
+  std::cout << " Best match = " << inputText.items[0].getBestMatch() << std::endl;
   //std::cout << inputText.items[10].fullSentence << std::endl;
   //inputText.items[10].chunks.listAll();
 
