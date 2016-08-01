@@ -13,6 +13,7 @@ public:
 	std::string getFullSentence();
 	std::string getSignature();
 	std::string getBestMatch();
+	int getLength();
 	void setBestMatch(std::string match);
 	ChunkSize::chunkSizeList getChunkSizes();
 	int getChunkCount(std::string chunk);
@@ -33,8 +34,12 @@ Sentence::Sentence(std::string sentence) {
 	trim(sentence);
 	signature = sign(sentence);
 	fullSentence = sentence;
-	chunkSizes.add(signature);
-	chunkCounter.count(signature);
+	chunkSizes.add(sentence);
+	chunkCounter.count(sentence);
+}
+
+int Sentence::getLength() {
+	return signature.length();
 }
 
 std::string Sentence::getBestMatch() {
