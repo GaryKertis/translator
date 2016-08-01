@@ -8,40 +8,22 @@
 
 class Matcher {
 public:
-	void match(Sentence &input, Sentence source, int chunkLength);
-	void processChunk(Sentence input, void (*callback)(std::string));
-	static void nameChunk(std::string chunk);
+	void match(Sentence &input, Sentence source);
 private:
 	int counter = 0;
 	int highestMatches = 0;
 };
 
-void Matcher::nameChunk(std::string chunk) {
-	std::cout << "Currently processing " << chunk << std::endl;
-}
-
-void Matcher::processChunk(Sentence input, void (*callback)(std::string)) {
-
-	ChunkSize::chunkSizeList chunks = input.getChunkSizes();
-
-	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
-	    Chunks::chunkList chunksToMatch = chunks[it->first].get();
-	    for(auto const& chunk: chunksToMatch) {
-	      (*callback)(chunk);
-	    }
-  	}
-}
-
-void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
+void Matcher::match(Sentence &input, Sentence source) {
 	std::cout << "Currently matching " << source.getFullSentence() << std::endl;
-	ChunkSize::chunkSizeList inputChunks = input.getChunkSizes();
+	Words::wordList words = input.getWords();
 
-	    Chunks::chunkList inputChunksToMatch = inputChunks[chunkLength].get();
-	    int totalChunksMatched = 0;
-	    for(auto const& inputChunk: inputChunksToMatch) {
+	    int totalWordsMatched = 0;
+
+	    for(auto const& word: words) {
 	        
-	        int chunkMatch = source.getChunkCount(inputChunk);  
-
+	        int chunkMatch = source.getChunkCount(word);  
+	        //std::cout << "Looking at " << word << std::endl;
 	    	if (chunkMatch > 0) {
 
 				std::map<std::string,int>::iterator got = input.matches.find(source.getFullSentence());
@@ -53,16 +35,16 @@ void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
 					got->second = got->second + 1;
 				}
 
-				totalChunksMatched += chunkMatch;
+				totalWordsMatched += chunkMatch;
 	    	} 
 
-				if (totalChunksMatched > highestMatches) {
-					highestMatches = totalChunksMatched;
+				if (totalWordsMatched > highestMatches) {
+					highestMatches = totalWordsMatched;
 					input.setBestMatch(source.getFullSentence());
 					std::cout << "HighestMatches " << highestMatches << std::endl;
 					std::cout << "New Best match " << source.getFullSentence() << std::endl;
 				}
-				//std::cout << "Found " << chunkMatch << " matches " << inputChunk << " for length " << chunkLength << std::endl;
+				//std::cout << "Found " << chunkMatch << " matches " << word << " for length " << chunkLength << std::endl;
 
 	    }
 

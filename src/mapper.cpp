@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
   //populate initial sentence list.
   Matcher matcher;
   for (auto it = sourceText.items.begin(); it != sourceText.items.end(); ++it) {
-  matcher.match(inputText.items[0], *it, 4);
+  matcher.match(inputText.items[0], *it);
   // std::map<std::string,int>::iterator got = inputText.items[0].matches.find(it->getFullSentence());
   
   // if (got != inputText.items[0].matches.end()) {

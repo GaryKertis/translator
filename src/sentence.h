@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 #include "trim.h"
-#include "chunkSize.h"
+#include "words.h"
 #include "chunkCounter.h"
 
 class Sentence {
@@ -14,16 +14,16 @@ public:
 	std::string getSignature();
 	std::string getBestMatch();
 	void setBestMatch(std::string match);
-	ChunkSize::chunkSizeList getChunkSizes();
+	Words::wordList getWords();
 	int getChunkCount(std::string chunk);
 	std::map<std::string, int> matches;
 	Sentence(std::string sentence);
 
 private:
+	Words words;
 	std::string bestMatch;
 	std::string fullSentence;
 	std::string signature;
-	ChunkSize chunkSizes;
 	ChunkCounter chunkCounter;
 	std::string sign(std::string sentence);
 	static bool checkChars(char v);
@@ -33,8 +33,8 @@ Sentence::Sentence(std::string sentence) {
 	trim(sentence);
 	signature = sign(sentence);
 	fullSentence = sentence;
-	chunkSizes.add(signature);
 	chunkCounter.count(signature);
+	words.create(fullSentence);
 }
 
 std::string Sentence::getBestMatch() {
@@ -57,8 +57,8 @@ int Sentence::getChunkCount(std::string chunk) {
 	return chunkCounter.getCount(chunk);
 }
 
-ChunkSize::chunkSizeList Sentence::getChunkSizes() {
-	return chunkSizes.getAllChunks();
+Words::wordList Sentence::getWords() {
+	return words.getAllWords();
 }
 
 
