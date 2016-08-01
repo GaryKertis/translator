@@ -26,16 +26,19 @@ void ChunkSize::add(std::string sentence) {
 		int remaining = sentence.length() - i;
 
 		for(int j = 1; j <= remaining;) {
-			std::string chunk = sentence.substr(i,j);
+			std::string chunk_name = sentence.substr(i,j);
+			int chunk_location = i;
+			int chunk_length = chunk_name.length();
+
+			Chunk chunk(chunk_name, chunk_location, chunk_length);
 			
-				int len = chunk.length();
-				chunkSizeList::iterator got = chunkSizes.find(len);
+				chunkSizeList::iterator got = chunkSizes.find(chunk_length);
 
 				if (got == chunkSizes.end()) {
 
 					Chunks chunks;
 					chunks.add(chunk);
-					std::pair<int, Chunks> current_chunk(len, chunks);
+					std::pair<int, Chunks> current_chunk(chunk_length, chunks);
 					chunkSizes.insert(current_chunk);
 
 				} else {

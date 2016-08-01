@@ -3,14 +3,14 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include "chunk.h"
 
 class Chunks {
 
 public:
-	typedef std::vector<std::string> chunkList;
+	typedef std::vector<Chunk> chunkList;
 
-	void add(std::string chunk);
-	void remove(std::string chunk);
+	void add(Chunk chunk);
 	chunkList get();
 private:
 	chunkList chunks;
@@ -20,13 +20,8 @@ Chunks::chunkList Chunks::get() {
 	return chunks;
 }
 
-void Chunks::add(std::string chunk) {
+void Chunks::add(Chunk chunk) {
 	chunks.push_back(chunk);
 }
-
-void Chunks::remove(std::string chunk) {
-	//remove chunk
-}
-
 
 #endif

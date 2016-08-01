@@ -9,28 +9,10 @@
 class Matcher {
 public:
 	void match(Sentence &input, Sentence source, int chunkLength);
-	void processChunk(Sentence input, void (*callback)(std::string));
-	static void nameChunk(std::string chunk);
 private:
 	int counter = 0;
 	int highestMatches = 0;
 };
-
-void Matcher::nameChunk(std::string chunk) {
-	std::cout << "Currently processing " << chunk << std::endl;
-}
-
-void Matcher::processChunk(Sentence input, void (*callback)(std::string)) {
-
-	ChunkSize::chunkSizeList chunks = input.getChunkSizes();
-
-	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
-	    Chunks::chunkList chunksToMatch = chunks[it->first].get();
-	    for(auto const& chunk: chunksToMatch) {
-	      (*callback)(chunk);
-	    }
-  	}
-}
 
 void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
 	std::cout << "Currently matching " << source.getFullSentence() << std::endl;
@@ -38,10 +20,10 @@ void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
 
 	    Chunks::chunkList inputChunksToMatch = inputChunks[chunkLength].get();
 	    int totalChunksMatched = 0;
-	    for(auto const& inputChunk: inputChunksToMatch) {
+	    for(auto & inputChunk: inputChunksToMatch) {
 	        
-	        int chunkMatch = source.getChunkCount(inputChunk);  
-
+	        int chunkMatch = source.getChunkCount(inputChunk.getName());  
+	        std::cout << inputChunk.getName() << inputChunk.getLocation() << std::endl;
 	    	if (chunkMatch > 0) {
 
 				std::map<std::string,int>::iterator got = input.matches.find(source.getFullSentence());
