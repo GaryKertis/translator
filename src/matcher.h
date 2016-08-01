@@ -22,7 +22,7 @@ void Matcher::nameChunk(std::string chunk) {
 
 void Matcher::processChunk(Sentence input, void (*callback)(std::string)) {
 
-	ChunkSize::chunkSizeList chunks = input.getChunkSizes().getAllChunks();
+	ChunkSize::chunkSizeList chunks = input.getChunkSizes();
 
 	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 	    Chunks::chunkList chunksToMatch = chunks[it->first].get();
@@ -34,13 +34,13 @@ void Matcher::processChunk(Sentence input, void (*callback)(std::string)) {
 
 void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
 	std::cout << "Currently matching " << source.getFullSentence() << std::endl;
-	ChunkSize::chunkSizeList inputChunks = input.getChunkSizes().getAllChunks();
+	ChunkSize::chunkSizeList inputChunks = input.getChunkSizes();
 
 	    Chunks::chunkList inputChunksToMatch = inputChunks[chunkLength].get();
 	    int totalChunksMatched = 0;
 	    for(auto const& inputChunk: inputChunksToMatch) {
 	        
-	        int chunkMatch = source.getChunkCounter().getCount(inputChunk);  
+	        int chunkMatch = source.getChunkCount(inputChunk);  
 
 	    	if (chunkMatch > 0) {
 

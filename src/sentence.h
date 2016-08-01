@@ -14,8 +14,8 @@ public:
 	std::string getSignature();
 	std::string getBestMatch();
 	void setBestMatch(std::string match);
-	ChunkSize getChunkSizes();
-	ChunkCounter getChunkCounter();
+	ChunkSize::chunkSizeList getChunkSizes();
+	int getChunkCount(std::string chunk);
 	std::map<std::string, int> matches;
 	Sentence(std::string sentence);
 
@@ -53,12 +53,12 @@ std::string Sentence::getSignature() {
 	return signature;
 }
 
-ChunkCounter Sentence::getChunkCounter() {
-	return chunkCounter;
+int Sentence::getChunkCount(std::string chunk) {
+	return chunkCounter.getCount(chunk);
 }
 
-ChunkSize Sentence::getChunkSizes() {
-	return chunkSizes;
+ChunkSize::chunkSizeList Sentence::getChunkSizes() {
+	return chunkSizes.getAllChunks();
 }
 
 
