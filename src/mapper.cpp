@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
   Matcher matcher;
 
   for (auto it = sourceText.items.begin(); it != sourceText.items.end(); ++it) {
-  matcher.match(inputText.items[0], *it, 2);
+  matcher.match(inputText.items[0], *it, 1);
 
 
   // std::map<std::string,int>::iterator got = inputText.items[0].matches.find(it->getFullSentence());

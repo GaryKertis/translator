@@ -25,36 +25,32 @@ void ChunkSize::add(std::string sentence) {
 
 		int remaining = sentence.length() - i;
 
-		for(int j = 1; j <= remaining;) {
-			std::string chunk_name = sentence.substr(i,j);
-			int chunk_location = i;
-			int chunk_length = chunk_name.length();
+		std::string chunk_name = sentence.substr(i,1);
+		int chunk_location = i;
+		int chunk_length = chunk_name.length();
 
-			Chunk chunk(chunk_name, chunk_location, 1);
+		Chunk chunk(chunk_name, chunk_location, 1);
+		
+		chunkSizeList::iterator got = chunkSizes.find(chunk_length);
+
+		if (got == chunkSizes.end()) {
+
+			Chunks chunks;
+			chunks.add(chunk);
+			std::pair<int, Chunks> current_chunk(chunk_length, chunks);
+			chunkSizes.insert(current_chunk);
+
+		} else {
+
+			Chunks::chunkList &current_chunks = got->second.get();
+			Chunks::chunkList::iterator cit = current_chunks.find(chunk_name);
 			
-				chunkSizeList::iterator got = chunkSizes.find(chunk_length);
+			if (cit == current_chunks.end()) {
+				got->second.add(chunk);
+			} else {
+				cit->second.incrementCount();
+			}
 
-				if (got == chunkSizes.end()) {
-
-					Chunks chunks;
-					chunks.add(chunk);
-					std::pair<int, Chunks> current_chunk(chunk_length, chunks);
-					chunkSizes.insert(current_chunk);
-
-				} else {
-
-					Chunks::chunkList &current_chunks = got->second.get();
-					Chunks::chunkList::iterator cit = current_chunks.find(chunk_name);
-					
-					if (cit == current_chunks.end()) {
-						got->second.add(chunk);
-					} else {
-						cit->second.incrementCount();
-					}
-
-
-				}
-			j++;
 		}
 
 		i++;

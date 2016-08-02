@@ -28,7 +28,9 @@ void Chunks::add(Chunk chunk) {
 
 Chunk &Chunks::getChunk(std::string chunk) {
 	chunkList::iterator got = chunks.find(chunk);
-	return got->second;
+	if (got != chunks.end()) {
+		return got->second;
+	}
 }
 
 #endif
