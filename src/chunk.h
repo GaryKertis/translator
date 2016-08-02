@@ -1,8 +1,6 @@
 #ifndef CHUNK_H
 #define CHUNK_H
 #include <iostream>
-#include <map>
-#include <vector>
 
 class Chunk {
 

@@ -1,9 +1,9 @@
 #include "splitter.h"
 #include "dictionary.h"
 #include "translate.h"
-#include "matches.h"
 #include "matcher.h"
 #include "sentence.h"
+#include "formatText.h"
 #include <iostream>
 #include <unistd.h>
 #include <fstream>
@@ -62,20 +62,11 @@ int main(int argc, char* argv[])
   Matcher matcher;
 
   for (auto it = sourceText.items.begin(); it != sourceText.items.end(); ++it) {
-  matcher.match(inputText.items[0], *it, 1);
-
-
-  // std::map<std::string,int>::iterator got = inputText.items[0].matches.find(it->getFullSentence());
-  
-  // if (got != inputText.items[0].matches.end()) {
-  //   std::cout << got->first << std::endl << got->second << std::endl;
-  // }
-
+      matcher.match(inputText.items[12], *it, 1);
   }
-  std::cout << inputText.items[0].getFullSentence() << std::endl;
-  std::cout << inputText.items[0].getBestMatch() << std::endl;
-  //std::cout << inputText.items[10].fullSentence << std::endl;
-  //inputText.items[10].chunks.listAll();
+
+  //std::cout << inputText.items[0].getFullSentence() << std::endl;
+  //std::cout << inputText.items[0].getBestMatch() << std::endl;
 
    // if (optind >= argc) {
    //      fprintf(stderr, "Expected argument after options\n");
