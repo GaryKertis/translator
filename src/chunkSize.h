@@ -42,8 +42,8 @@ void ChunkSize::add(std::string sentence) {
 					chunkSizes.insert(current_chunk);
 
 				} else {
-
-					got->second.add(chunk);
+					Chunks::chunkList current_chunks = got->second.get();
+					Chunks::chunkList::iterator cit = current_chunks.find(chunk_name);
 
 				}
 			j++;

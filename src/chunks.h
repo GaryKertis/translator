@@ -2,13 +2,13 @@
 #define CHUNKS_H
 #include <iostream>
 #include <map>
-#include <vector>
+#include <map>
 #include "chunk.h"
 
 class Chunks {
 
 public:
-	typedef std::vector<Chunk> chunkList;
+	typedef std::map<std::string, Chunk> chunkList;
 
 	void add(Chunk chunk);
 	chunkList get();
@@ -21,7 +21,8 @@ Chunks::chunkList Chunks::get() {
 }
 
 void Chunks::add(Chunk chunk) {
-	chunks.push_back(chunk);
+	std::pair<std::string, Chunk> current_chunk(chunk.getName(), chunk);
+	chunks.insert(current_chunk);
 }
 
 #endif

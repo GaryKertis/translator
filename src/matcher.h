@@ -22,8 +22,8 @@ void Matcher::match(Sentence &input, Sentence source, int chunkLength) {
 	    int totalChunksMatched = 0;
 	    for(auto & inputChunk: inputChunksToMatch) {
 	        
-	        int chunkMatch = source.getChunkCount(inputChunk.getName());  
-	        std::cout << inputChunk.getName() << inputChunk.getLocation() << std::endl;
+	        int chunkMatch = source.getChunkCount(inputChunk.first);  
+	        std::cout << inputChunk.second.getName() << inputChunk.second.getLocation() << std::endl;
 	    	if (chunkMatch > 0) {
 
 				std::map<std::string,int>::iterator got = input.matches.find(source.getFullSentence());
