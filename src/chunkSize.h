@@ -12,7 +12,7 @@ public:
 	
 	void add(std::string chunk);
 	chunkSizeList getAllChunks();
-	Chunks getChunk(int i);
+	Chunk &getChunk(std::string chunk);
 private:
 	chunkSizeList chunkSizes;
 };
@@ -30,7 +30,7 @@ void ChunkSize::add(std::string sentence) {
 			int chunk_location = i;
 			int chunk_length = chunk_name.length();
 
-			Chunk chunk(chunk_name, chunk_location, chunk_length);
+			Chunk chunk(chunk_name, chunk_location, 1);
 			
 				chunkSizeList::iterator got = chunkSizes.find(chunk_length);
 
@@ -42,8 +42,16 @@ void ChunkSize::add(std::string sentence) {
 					chunkSizes.insert(current_chunk);
 
 				} else {
-					Chunks::chunkList current_chunks = got->second.get();
+
+					Chunks::chunkList &current_chunks = got->second.get();
 					Chunks::chunkList::iterator cit = current_chunks.find(chunk_name);
+					
+					if (cit == current_chunks.end()) {
+						got->second.add(chunk);
+					} else {
+						cit->second.incrementCount();
+					}
+
 
 				}
 			j++;
@@ -54,8 +62,9 @@ void ChunkSize::add(std::string sentence) {
 
 }
 
-Chunks ChunkSize::getChunk(int i) {
-	return chunkSizes[i];
+Chunk &ChunkSize::getChunk(std::string chunk) {
+	Chunks &chunks = chunkSizes[chunk.length()];
+	return chunks.getChunk(chunk);
 }
 
 ChunkSize::chunkSizeList ChunkSize::getAllChunks() {

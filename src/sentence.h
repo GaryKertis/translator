@@ -5,7 +5,6 @@
 #include <vector>
 #include "trim.h"
 #include "chunkSize.h"
-#include "chunkCounter.h"
 
 class Sentence {
 public:
@@ -15,7 +14,9 @@ public:
 	std::string getBestMatch();
 	void setBestMatch(std::string match);
 	ChunkSize::chunkSizeList getChunkSizes();
+	Chunk &getChunk(std::string chunk);
 	int getChunkCount(std::string chunk);
+	int getChunkLocations(std::string chunk);
 	std::map<std::string, int> matches;
 	Sentence(std::string sentence);
 
@@ -24,7 +25,6 @@ private:
 	std::string fullSentence;
 	std::string signature;
 	ChunkSize chunkSizes;
-	ChunkCounter chunkCounter;
 	std::string sign(std::string sentence);
 	static bool checkChars(char v);
 };
@@ -33,8 +33,7 @@ Sentence::Sentence(std::string sentence) {
 	trim(sentence);
 	signature = sign(sentence);
 	fullSentence = sentence;
-	chunkSizes.add(signature);
-	chunkCounter.count(signature);
+	chunkSizes.add(sentence);
 }
 
 std::string Sentence::getBestMatch() {
@@ -53,8 +52,16 @@ std::string Sentence::getSignature() {
 	return signature;
 }
 
+Chunk &Sentence::getChunk(std::string chunk) {
+	return chunkSizes.getChunk(chunk);
+}
+
 int Sentence::getChunkCount(std::string chunk) {
-	return chunkCounter.getCount(chunk);
+	return getChunk(chunk).getCount();
+}
+
+int Sentence::getChunkLocations(std::string chunk) {
+	return getChunk(chunk).getLocation();
 }
 
 ChunkSize::chunkSizeList Sentence::getChunkSizes() {
