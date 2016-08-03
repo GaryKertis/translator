@@ -28,8 +28,9 @@ int readFile(std::string fileName, void (*callback)(std::string)) {
 }
 
 void translateLine(std::string line) {
-  std::string translatedLine = translate(line);
-  inputText.add(splitter(translatedLine, "."));
+  Alphabet translatedLine = translate(line);
+  Alphabet::alphabetType translation = translatedLine.getTranslation();
+  //inputText.add(splitter(translatedLine, "."));
 }
 
 void addLine(std::string line) {
@@ -59,14 +60,14 @@ int main(int argc, char* argv[])
   //Matches matches(sourceText);
 
   //populate initial sentence list.
-  Matcher matcher;
+  // Matcher matcher;
 
-  for (auto it = sourceText.items.begin(); it != sourceText.items.end(); ++it) {
-      matcher.match(inputText.items[0], *it, 1);
-  }
+  // for (auto it = sourceText.items.begin(); it != sourceText.items.end(); ++it) {
+  //     matcher.match(inputText.items[0], *it, 1);
+  // }
 
-  format(inputText.items[0].getFullSentence(), inputText.items[0].getBestMatchLocations());
-  format(inputText.items[0].getBestMatch(), inputText.items[0].getBestMatchLocations());
+  // format(inputText.items[0].getFullSentence(), inputText.items[0].getBestMatchLocations());
+  // format(inputText.items[0].getBestMatch(), inputText.items[0].getBestMatchLocations());
 
    // if (optind >= argc) {
    //      fprintf(stderr, "Expected argument after options\n");
