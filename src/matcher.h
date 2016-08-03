@@ -18,33 +18,31 @@ void Matcher::match(Sentence &input, Sentence &source, int chunkLength) {
 
 	Sentence::chunkList inputChunks = input.getChunks();
 
-	    int totalChunksMatched = 0;
-	   	std::vector<int> matchLocations;
+    int totalChunksMatched = 0;
+   	std::vector<int> saveLocations;
 
-	    for(Sentence::chunkList::iterator ic = inputChunks.begin(); ic != inputChunks.end(); ic++) {
+    for(Sentence::chunkList::iterator ic = inputChunks.begin(); ic != inputChunks.end(); ic++) {
+  		
+   		std::vector<int> matchLocations = ic->second.getLocations();
+        for (int i = 0; i < ic->second.getCount(); i++) {
 
-	        int sourceMatches = source.getChunkLocations(ic->first);
-	        int inputMatches = ic->second.getLocation();
-
-	    	if (sourceMatches != 0 && sourceMatches == inputMatches) {
-
+	    	if (source.hasChunkLocation(ic->first, matchLocations[i])) {
 				totalChunksMatched++;
-				matchLocations.push_back(sourceMatches);
-	    	} 
+				saveLocations.push_back(matchLocations[i]);
+	    	}
+
+		}	
 
 
-			if (totalChunksMatched > highestMatches) {
+		if (totalChunksMatched > highestMatches) {
+			
+			highestMatches = totalChunksMatched;
+			
+			input.setBestMatch(source.getFullSentence(), saveLocations);
 
-				highestMatches = totalChunksMatched;
+		}
 
-				format(source.getFullSentence(), matchLocations);
-				format(input.getFullSentence(), matchLocations);
-				
-				input.setBestMatch(source.getFullSentence());
-
-			}
-
-	    }
+    }
 
 }
 

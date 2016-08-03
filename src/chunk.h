@@ -1,19 +1,22 @@
 #ifndef CHUNK_H
 #define CHUNK_H
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 class Chunk {
 
 public:
-	int getLocation();
+	std::vector<int> getLocations();
 	int getCount();
 	std::string getName();
+	bool hasLocation(int location);
 	void incrementCount();
-	void updateLocation(int location);
-	Chunk(std::string chunk, int location, int count) : m_chunk(chunk), m_location(location), m_count(count) {}; 
+	void addLocation(int location);
+	Chunk(std::string chunk, int location, int count);
 private:
-	int m_location;
-	int m_count;
+	std::vector<int> m_locations;
+	int m_count = 1;
 	std::string m_chunk;
 };
 
