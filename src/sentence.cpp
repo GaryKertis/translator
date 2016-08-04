@@ -2,9 +2,14 @@
 
 Sentence::Sentence(std::string sentence) {
 	trim(sentence);
-	signature = sign(sentence);
 	fullSentence = sentence;
 	addChunk(sentence);
+}
+
+Sentence::Sentence(Alphabet alphabet) {
+	fullSentence = alphabet.getUntranslatedString();
+	trim(fullSentence);
+	addChunk(alphabet);
 }
 
 std::string Sentence::getBestMatch() {
@@ -79,6 +84,35 @@ void Sentence::addChunk(std::string sentence) {
 			it->second.addLocation(chunk_location);
 		}
 		i++;
+	}
+}
+
+void Sentence::addChunk(Alphabet alphabet) {
+//find all chunks with given length of size
+	int location = 0;
+
+	Alphabet::outputType letters = alphabet.getTranslation();
+
+	for(Alphabet::outputType::iterator i = letters.begin(); i != letters.end(); i++) {
+		for(Alphabet::letterType::iterator j = i->begin(); j != i->end(); j++) {
+
+		 	std::string chunk_name = *j;
+			int chunk_location = location;
+			int chunk_length = chunk_name.length();
+
+			chunkList::iterator it = chunks.find(chunk_name);
+			
+			if (it == chunks.end()) {
+				Chunk chunk(chunk_name, chunk_location, 1);
+				std::pair<std::string, Chunk> current_chunk(chunk_name, chunk);
+				chunks.insert(current_chunk);
+			} else {
+				it->second.incrementCount();
+				it->second.addLocation(chunk_location);
+			}
+
+		}
+		location++;
 	}
 }
 

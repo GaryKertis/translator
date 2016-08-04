@@ -11,7 +11,7 @@
 
 Alphabet translate(std::string line) {
 	Alphabet result;
-	
+	result.setUntranslatedString(line);
 	for(int i = 0; line[i] != '\0';) {
 
 		std::string input(1, line[i]);

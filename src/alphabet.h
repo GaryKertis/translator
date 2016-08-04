@@ -9,13 +9,17 @@ class Alphabet {
 public:
 	typedef std::vector<std::string> letterType;
 	typedef std::map<std::string, letterType> alphabetType;
+	typedef std::vector<letterType> outputType;
 	int addLetter(std::string symbol);
 	alphabetType getAlphabet();
-	alphabetType getTranslation();
+	outputType getTranslation();
+	std::string getUntranslatedString();
+	void setUntranslatedString(std::string);
 	Alphabet();
 private:
-	alphabetType m_translation;
+	outputType m_translation;
 	alphabetType m_alphabet;
+	std::string m_untranslated_string;
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include <map>
 #include "trim.h"
 #include "chunk.h"
+#include "alphabet.h"
 
 class Sentence {
 public:
@@ -14,18 +15,20 @@ public:
 
 	std::string getBestMatch();
 	std::vector<int> getBestMatchLocations();
-	void setBestMatch(std::string match, std::vector<int> saveLocations);
+	void setBestMatch(std::string, std::vector<int>);
 
 	chunkList getChunks();
-	Chunk &getChunk(std::string chunk);
+	Chunk &getChunk(std::string);
 
-	int getChunkCount(std::string chunk);
-	std::vector<int> getChunkLocations(std::string chunk);
-	bool hasChunkLocation(std::string chunk, int location);
+	int getChunkCount(std::string);
+	std::vector<int> getChunkLocations(std::string);
+	bool hasChunkLocation(std::string, int);
 
-	void addChunk(std::string sentence);
+	void addChunk(std::string);
+	void addChunk(Alphabet);
 
-	Sentence(std::string sentence);
+	Sentence(std::string);
+	Sentence(Alphabet);
 
 private:
 	std::string bestMatch;
@@ -33,8 +36,8 @@ private:
 	std::string signature;
 	std::vector<int> bestMatchLocations;
 	chunkList chunks;
-	std::string sign(std::string sentence);
-	static bool checkChars(char v);
+	std::string sign(std::string);
+	static bool checkChars(char);
 };
 
 #endif

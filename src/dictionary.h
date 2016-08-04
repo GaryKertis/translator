@@ -8,13 +8,16 @@ class Dictionary {
 public:
 	typedef std::vector<Sentence> sentenceList;
 	sentenceList items;
-	int current_id;
-	void add(sentenceList sentences);
+	void add(sentenceList);
+	void add(Sentence);
 };
 
 void Dictionary::add(sentenceList sentences) {
-	current_id++;
 	items.insert( items.end(), sentences.begin(), sentences.end() );
+}
+
+void Dictionary::add(Sentence sentence) {
+	items.push_back(sentence);
 }
 
 #endif

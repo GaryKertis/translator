@@ -9,8 +9,16 @@ Alphabet::alphabetType Alphabet::getAlphabet() {
 	return m_alphabet;
 }
 
-Alphabet::alphabetType Alphabet::getTranslation() {
+Alphabet::outputType Alphabet::getTranslation() {
 	return m_translation;
+}
+
+std::string Alphabet::getUntranslatedString() {
+	return m_untranslated_string;
+}
+
+void Alphabet::setUntranslatedString(std::string untranslated) {
+	m_untranslated_string = untranslated;
 }
 
 int Alphabet::addLetter(std::string symbol) {
@@ -76,7 +84,7 @@ int Alphabet::addLetter(std::string symbol) {
 	{"ζ",{"z"}},\
 	{"η",{"n"}},\
 	{"θ",{"o"}},\
-	{"ι",{"i"}},\
+	{"ι",{"i", "l", "t"}},\
 	{"κ",{"k"}},\
 	{"λ",{"a"}},\
 	{"μ",{"m"}},\
@@ -371,20 +379,18 @@ int Alphabet::addLetter(std::string symbol) {
 	
 	alphabetType::const_iterator got = m_alphabet.find(thisChar);
 
-
 	if (got == m_alphabet.end()) {
 		//the letter was not found.
 		if(thisChar.find_first_not_of(' ') != std::string::npos) {
 			std::cout << "No match for character " << thisChar << std::endl;
 		} else {
-			std::pair<std::string, letterType> current_letter(" ", {" "});
-			m_translation.insert(current_letter);
+			letterType current_letter = {" "};
+			m_translation.push_back(current_letter);
 		}
 		return 1;
 	} else {
-		std::pair<std::string, letterType> current_letter(got->first, got->second);
-		m_translation.insert(current_letter);
-		std::cout << thisChar << std::endl;
+		letterType current_letter = got->second;
+		m_translation.push_back(current_letter);
 		return 0;
 	}
 
