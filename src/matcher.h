@@ -3,8 +3,6 @@
 #include "sentence.h"
 #include <iostream>
 #include <vector>
-#include <map>
-#include "formatText.h"
 
 class Matcher {
 public:
@@ -32,7 +30,6 @@ void Matcher::match(Sentence &input, Sentence &source, int chunkLength) {
 	    	}
 
 		}	
-
 
 		if (totalChunksMatched > highestMatches) {
 			

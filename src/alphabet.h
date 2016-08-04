@@ -18,7 +18,7 @@ public:
 	Alphabet();
 private:
 	outputType m_translation;
-	alphabetType m_alphabet;
+	static alphabetType m_alphabet;
 	std::string m_untranslated_string;
 };
 

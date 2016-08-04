@@ -63,11 +63,11 @@ int main(int argc, char* argv[])
   Matcher matcher;
 
   for (auto it = sourceText.items.begin(); it != sourceText.items.end(); ++it) {
-      matcher.match(inputText.items[0], *it, 1);
+      matcher.match(inputText.items[10], *it, 1);
   }
 
-  std::cout<<inputText.items[0].getFullSentence()<<std::endl;
-  format(inputText.items[0].getBestMatch(), inputText.items[0].getBestMatchLocations());
+  std::cout<<inputText.items[10].getFullSentence()<<std::endl;
+  std::cout<<format(inputText.items[10].getBestMatch(), inputText.items[10].getBestMatchLocations())<<std::endl;
 
    // if (optind >= argc) {
    //      fprintf(stderr, "Expected argument after options\n");
